@@ -4,6 +4,6 @@
 
 
 import {print} from './print';
-import {example3} from './subject.1';
+import {example4} from './subject.1';
 
-example3();
+example4();

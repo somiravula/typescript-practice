@@ -1,5 +1,5 @@
 import { print } from "./print";
-import { Observable, Subject, BehaviorSubject } from "rxjs";
+import { Observable, Subject, BehaviorSubject, ReplaySubject } from "rxjs";
 
 export function example1() {
   const subject = new Subject<number>();
@@ -21,6 +21,7 @@ export function example1() {
   });
 
   subject.next(3);
+
 }
 
 export function example2() {
@@ -69,4 +70,24 @@ export function example3() {
   });
 
   bs.next(3);
+  print(bs.getValue());
+}
+
+
+export function example4()
+{
+  const sub = new ReplaySubject(1); //count of last emmited values that we want to give to new subcriber
+sub.next(1);
+sub.next(2);
+sub.subscribe(value=>
+{
+  print('subcriber 1 =>' +value)
+}); // OUTPUT => 1,2
+sub.next(3); // OUTPUT => 3
+sub.next(4); // OUTPUT => 4
+sub.subscribe(value=>
+{
+  print('subcriber 2 =>' +value)
+}); // OUTPUT => 2,3,4 (log of last 3 values from new subscriber)
+sub.next(5); 
 }
